@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="th">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#477b3b">
+<title>My Dream Farm</title>
+<style>
+:root{--green:#477b3b;--deep:#254b28;--cream:#fff8e8;--soil:#8b603c;--gold:#f2c65d}
+*{box-sizing:border-box} body{margin:0;font-family:system-ui,-apple-system,sans-serif;background:linear-gradient(#a9d8ef 0 27%,#c9e6a5 27% 100%);color:#243523;min-height:100vh}
+header{padding:16px 14px 12px;background:linear-gradient(120deg,#356b36,#679a46);color:white;border-radius:0 0 22px 22px;box-shadow:0 4px 14px #254b2840}
+h1{margin:0;font-size:23px} .sub{font-size:12px;opacity:.9}
+.stats{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}.pill{background:#ffffff25;border:1px solid #ffffff55;padding:7px 11px;border-radius:20px;font-weight:700;font-size:14px}
+main{max-width:760px;margin:auto;padding:14px}
+.scene{background:linear-gradient(#b7dfef,#d9edbd 45%,#7da957);border:3px solid #ffffffa0;border-radius:18px;padding:12px;box-shadow:0 5px 15px #244b2830}
+.skyline{display:flex;justify-content:space-between;align-items:end;height:75px;padding:0 6px 8px}
+.tree{font-size:42px;filter:drop-shadow(0 3px 2px #3455)}
+.house{font-size:45px}
+h2{font-size:17px;margin:14px 2px 9px}
+.plots{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
+.plot{background:linear-gradient(145deg,#a87548,#704629);border:3px solid #654329;border-radius:13px;min-height:124px;padding:9px;color:#fff8e8;box-shadow:inset 0 3px 5px #ffffff25,0 3px 5px #294b2430;display:flex;flex-direction:column;justify-content:space-between}
+.plot-top{display:flex;justify-content:space-between;font-size:12px;color:#ffe9c8}.crop{font-size:30px;text-align:center;line-height:1.2}.status{text-align:center;font-size:12px;min-height:18px}
+button{border:0;border-radius:10px;padding:9px 10px;font-weight:750;background:#f4d477;color:#493718;font-size:13px;cursor:pointer;touch-action:manipulation}
+button:disabled{opacity:.5} .plot button{width:100%;margin-top:6px}
+.actions{display:grid;grid-template-columns:repeat(2,1fr);gap:9px;margin-top:12px}
+.action{background:#fff9e9;border:1px solid #e6d5a7;border-radius:14px;padding:12px}
+.action strong{display:block;margin-bottom:5px}.action p{font-size:12px;margin:0 0 8px;color:#5e664e}
+.notice{background:#fff9e9;border-radius:12px;padding:10px 12px;font-size:12px;margin-top:12px;color:#4c5b3f}
+footer{text-align:center;font-size:11px;color:#385538;padding:18px}
+@media(min-width:600px){.plots{grid-template-columns:repeat(3,1fr)}}
+</style>
+</head>
+<body>
+<header><h1>🌿 My Dream Farm</h1><div class="sub">ฟาร์มเล็ก ๆ ที่คุณสร้างได้ด้วยตัวเอง</div>
+<div class="stats"><div class="pill">🪙 เงิน: <span id="coins">100</span></div><div class="pill">📦 ผลผลิต: <span id="stock">0</span></div><div class="pill">🌱 แปลง: 6</div></div></header>
+<main>
+<section class="scene"><div class="skyline"><span class="tree">🌳</span><span class="house">🏡</span><span class="tree">🌲</span></div>
+<div style="font-weight:800;color:#31552d">แปลงผักของฉัน</div><div class="sub" style="color:#365b36">แตะช่องดินเพื่อเริ่มปลูกผัก</div>
+<div class="plots" id="plots"></div></section>
+<h2>🧺 ตลาดฟาร์ม</h2>
+<div class="actions">
+<div class="action"><strong>🥕 แครอท</strong><p>โตใน 1 นาที · ขายได้ 15 เหรียญ</p><button onclick="plantChoice('carrot')">เลือกปลูก</button></div>
+<div class="action"><strong>🍅 มะเขือเทศ</strong><p>โตใน 2 นาที · ขายได้ 25 เหรียญ</p><button onclick="plantChoice('tomato')">เลือกปลูก</button></div>
+<div class="action"><strong>🌽 ข้าวโพด</strong><p>โตใน 3 นาที · ขายได้ 35 เหรียญ</p><button onclick="plantChoice('corn')">เลือกปลูก</button></div>
+<div class="action"><strong>🍉 แตงโม</strong><p>โตใน 5 นาที · ขายได้ 55 เหรียญ</p><button onclick="plantChoice('melon')">เลือกปลูก</button></div>
+</div>
+<div class="notice" id="message">เริ่มจากเลือกชนิดผัก แล้วแตะแปลงดินว่างเพื่อปลูก รดน้ำช่วยลดเวลาที่เหลือ 20% เกมบันทึกข้อมูลไว้ในเครื่องนี้อัตโนมัติ</div>
+</main><footer>My Dream Farm · เวอร์ชันทดลองเล่นบนมือถือ · ข้อมูลบันทึกในเบราว์เซอร์เครื่องนี้</footer>
+<script>
+const crops={carrot:{name:'แครอท',emoji:'🥕',ms:60000,price:15},tomato:{name:'มะเขือเทศ',emoji:'🍅',ms:120000,price:25},corn:{name:'ข้าวโพด',emoji:'🌽',ms:180000,price:35},melon:{name:'แตงโม',emoji:'🍉',ms:300000,price:55}};
+let state=JSON.parse(localStorage.getItem('mdf-save')||'null')||{coins:100,stock:0,plots:Array(6).fill(null)};
+let selected='carrot';
+function save(){localStorage.setItem('mdf-save',JSON.stringify(state));}
+function plantChoice(k){selected=k;msg('เลือก'+crops[k].name+'แล้ว แตะแปลงดินว่างเพื่อปลูก');}
+function msg(t){document.getElementById('message').textContent=t}
+function plant(i){if(state.plots[i])return;let c=crops[selected];state.plots[i]={crop:selected,finish:Date.now()+c.ms,watered:false};save();render();msg('ปลูก'+c.name+'แล้ว รอให้โตได้เลย');}
+function water(i){let p=state.plots[i];if(!p||p.watered||Date.now()>=p.finish)return;p.finish=Date.now()+Math.max(0,(p.finish-Date.now())*.8);p.watered=true;save();render();msg('รดน้ำแล้ว! ลดเวลาที่เหลือ 20%');}
+function harvest(i){let p=state.plots[i];if(!p||Date.now()<p.finish)return;state.stock++;state.plots[i]=null;save();render();msg('เก็บเกี่ยวสำเร็จ! นำผลผลิตไปขายที่ตลาดได้เลย');}
+function sell(){if(!state.stock){msg('ยังไม่มีผลผลิต ลองปลูกผักก่อนนะ');return}let total=0; // stock is a mixed count; use average sale value for this starter prototype
+total=state.stock*25;state.coins+=total;let n=state.stock;state.stock=0;save();render();msg('ขายผลผลิต '+n+' ชิ้น ได้ '+total+' เหรียญ');}
+function render(){document.getElementById('coins').textContent=state.coins;document.getElementById('stock').textContent=state.stock;let root=document.getElementById('plots');root.innerHTML='';state.plots.forEach((p,i)=>{let el=document.createElement('div');el.className='plot';let content='';if(!p){content=`<div class="plot-top"><span>แปลง ${i+1}</span><span>ดินว่าง</span></div><div class="crop">🟫</div><div class="status">พร้อมปลูก</div><button onclick="plant(${i})">ปลูก ${crops[selected].name}</button>`}else{let c=crops[p.crop],left=p.finish-Date.now(),ready=left<=0;content=`<div class="plot-top"><span>แปลง ${i+1}</span><span>${p.watered?'💧 รดแล้ว':'🌱 กำลังโต'}</span></div><div class="crop">${ready?c.emoji+'✨':'🌱'}</div><div class="status">${ready?'เก็บเกี่ยวได้แล้ว':c.name+' · '+Math.ceil(left/1000)+' วินาที'}</div>${ready?`<button onclick="harvest(${i})">เก็บเกี่ยว</button>`:`<button onclick="water(${i})" ${p.watered?'disabled':''}>${p.watered?'รดน้ำแล้ว':'💧 รดน้ำ ลดเวลา 20%'}</button>`}`}el.innerHTML=content;root.appendChild(el)});}
+document.querySelector('h2').insertAdjacentHTML('afterend','<div style="margin:-2px 2px 10px"><button onclick="sell()">🪙 ขายผลผลิตทั้งหมด (25 เหรียญ/ชิ้น)</button></div>');
+render();setInterval(render,1000);
+</script></body></html>
